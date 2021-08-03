@@ -9,7 +9,7 @@ ARG uid=1000
 # Install Composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-COPY ./custom.ini /usr/local/etc/php/conf.d/custom.ini
+#COPY ./custom.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
