@@ -25,28 +25,23 @@ Alternatively you can use Github desktop to clone down the repo.
 ### 3: Configure SDE
 Once the repository is cloned you can configure your development environment using the .env file inside this directory
 
-for more details about Environ variables and how they are used see the [ENVRIONMENT DOCS](ENV.MD) 
+for more details about Environ variables and how they are used see the [ENVRIONMENT DOCS](ENV_VARS.MD) 
 
 
 ###  4: Docker Startup 
+start all ther services and containers in the compose file
 
     docker-compose build
 
     docker-compose up -d
 
 
-### Container Services
+### 5: Docker Stop
 
-this docker-compose file contains a number of container services ( artisan/npm/composer ) you can access them 
+take down all services and containers in compose file
 
-    docker-compose run <service_name> <command>
+    docker-compose down
 
-**examples**
-
-    docker-compose run test.composer install
-    docker-compose run test.npm run dev
-    docker-compose run test.artisan test
-
-
-see more about [COMMANDS](COMMANDS.MD)
+## Running Commands
+information on commands and how to run them in a docker envrionment can be found here [COMMANDS](COMMANDS.MD)
 
