@@ -10,61 +10,82 @@ use a consistent pattern across port numbering.  you can set the first 2 digits 
 
 __example__:  
 > __Project A__  
->HTTP_PORT=8000  
->MAILHOG_PORT=8025    
->MEILISEARCH_PORT=8077
+> HTTP_PORT=8000  
+> MAILHOG_PORT=8025    
+> MEILISEARCH_PORT=8077
 
 > __Project B__  
->HTTP_PORT=8100  
->MAILHOG_PORT=8125    
->MEILISEARCH_PORT=8177
+> HTTP_PORT=8100  
+> MAILHOG_PORT=8125    
+> MEILISEARCH_PORT=8177
 
+> __note__: Ports must be unique across all running projects. You cannot bind to the same host port for multiple containers.
 
 ## Environment Variables
 
+<dl>
+
+  <dt>COMPOSE_PROJECT_NAME</dt>
+  <dd>
+  Provides scope for containers and services created. Use project folder name   
+
+  __example__: setting this value to __test__ will result in containers test.app, test.nginx...
+  </dd>
+
+
+</dl>
+
+
+
 #### COMPOSE_PROJECT_NAME
 
->Provides scope for containers and services created. Use project folder name   
+> Provides scope for containers and services created. Use project folder name   
 >
->__example__: setting this value to __test__ will result in containers test.app, test.nginx...
+> __example__: setting this value to __test__ will result in containers test.app, test.nginx...
 
 #### HTTP_PORT
 
->Local Machine port that will be used to access this project  
+> Local Machine port that will be used to access this project  
 >
->__example__: 8000  
-> 
->__note__: this must be unique across running projects, as you cannot bind to the same address for multiple containers.
+> __example__: 8000  
+
+
+#### MYSQL_PORT
+
+> Local Machine port that will be used to access project database
+>
+> __example__: 8036
+
 
 #### DB_DATABASE
->Create Database by this name.  
+> Create Database by this name.  
 >
->__note__: this value will need to be used in the application .env or configuration
+> __note__: this value will need to be used in the application .env or configuration
 
 #### DB_USERNAME
->Username for created database user  
+> Username for created database user  
 > 
->__note__: this value will need to be used in the application .env or configuration
+> __note__: this value will need to be used in the application .env or configuration
 
 #### DB_PASSWORD
->Password for created database user
+> Password for created database user
 > 
->__note__: this value will need to be used in the application .env or configuration
+> __note__: this value will need to be used in the application .env or configuration
 
 #### MAILHOG_PORT
->Local Machine Port used to access Meilisearch web interface
+> Local Machine Port used to access Meilisearch web interface
 >
->__example__: 8025
+> __example__: 8025
 
 #### MEILISEARCH_PORT
->Local Machine Port used to access Meilisearch web interface
+> Local Machine Port used to access Meilisearch web interface
 >
->__example__: 8077
+> __example__: 8077
 
 #### MEILISEARCH_KEY
 
->Master Key used to create Meilisearch instance  
+> Master Key used to create Meilisearch instance  
 >
->__default__: MeilisearchLocalDevelopment
+> __default__: MeilisearchLocalDevelopment
 >
->__note__: this value will need to be used in the application .env or configuration
+> __note__: this value will need to be used in the application .env or configuration
