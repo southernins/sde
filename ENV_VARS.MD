@@ -1,11 +1,34 @@
-# Docker Envrionment Variables for SDE
+# Docker Environment Variables for SDE
 
+## Best Practice
+
+a good practice when setting up the env variables for a project is
+
+### Project Naming
+ set `COMPOSE_PROJECT_NAME` to the project code directory or project repo name.  This will provide better visibity/tracking of containers when multiple projects are running
+  
+### Port Configuration.
+use a consistent pattern across port numbering.  you can set the first 2 digits for a project and us the last 2 to represent specific services 
+
+__example__:  
+> __Project A__  
+>HTTP_PORT=8000  
+>MAILHOG_PORT=8025    
+>MEILISEARCH_PORT=8077
+
+> __Project B__  
+>HTTP_PORT=8100  
+>MAILHOG_PORT=8125    
+>MEILISEARCH_PORT=8177
+
+
+## Environment Variables
 
 #### COMPOSE_PROJECT_NAME
 
->provides scope for containers and services created. Use project folder name   
+>Provides scope for containers and services created. Use project folder name   
 >
->__example__: given the project created by `git clone https://github.com/southernins/test.git ./` set the value to __"test"__
+>__example__: setting this value to __test__ will result in containers test.app, test.nginx...
 
 #### HTTP_PORT
 
