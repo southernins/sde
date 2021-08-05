@@ -2,7 +2,7 @@
 
 ## Best Practice
 
-a good practice when setting up the env variables for a project is
+here are some good practices when setting up the env variables for a project
 
 ### Project Naming
  set `COMPOSE_PROJECT_NAME` to the project code directory or project repo name.  This will provide better visibity/tracking of containers when multiple projects are running
