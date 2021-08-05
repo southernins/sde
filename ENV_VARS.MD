@@ -1,7 +1,5 @@
 # Docker Environment Variables for SDE
 
-## Best Practice
-
 here are some good practices when setting up the env variables for a project
 
 ### Project Naming
