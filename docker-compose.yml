@@ -12,7 +12,6 @@ services:
     working_dir: /var/www/
     volumes:
       - ./${COMPOSE_PROJECT_NAME}:/var/www
-      - ./builds:/var/www/builds
     networks:
       - app-net
 
