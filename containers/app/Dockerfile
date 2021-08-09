@@ -6,7 +6,7 @@ FROM php:7.4-fpm
 ARG user=southerndev
 ARG uid=1000
 
-RUN mkdir /var/www/builds
+#RUN mkdir /var/www/builds
 
 # Install Composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
