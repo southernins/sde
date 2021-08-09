@@ -23,9 +23,9 @@ Alternatively you can use Github desktop to clone down the repo.
 
 
 ### 3: Configure SDE
-Once the repository is cloned you can configure your development environment using the .env file inside this directory
+Once the repository is cloned you can configure your development environment using a .env file inside this directory.  An example file `.env.example` is provided, just rename this file to `.env` and set the values as needed for your project.
 
-for more details about Environ variables and how they are used see the [ENVRIONMENT DOCS](ENV_VARS.MD) 
+For more details about Environment variables see [ENVRIONMENT DOCS](ENV_VARS.MD) 
 
 
 ###  4: Docker Startup 
@@ -42,6 +42,12 @@ take down all services and containers in compose file
 
     docker-compose down
 
+
 ## Running Commands
 information on commands and how to run them in a docker envrionment can be found here [COMMANDS](COMMANDS.MD)
 
+
+## Updating SDE
+to update your local install/clone of SDE to get any changes pushed out.
+
+    git pull origin main

@@ -23,71 +23,87 @@ __note__: Ports must be unique across all running projects. You cannot bind to t
 
 ## Environment Variables
 
-<dl>
+### Project Details
+> <dl>
+> 
+>   <dt>COMPOSE_PROJECT_NAME</dt>
+>   <dd>
+>   Provides scope for containers and services created. Use project folder name   
+> 
+>   __example__: setting this value to __test__ will result in containers `test.app`, `test.nginx` and point the document root to `./test` for this project ...
+>   </dd>
+> </dl>
 
-  <dt>COMPOSE_PROJECT_NAME</dt>
-  <dd>
-  Provides scope for containers and services created. Use project folder name   
+### Application 
+> <dl>
+> 
+>   <dt>HTTP_PORT</dt>
+>   <dd>
+>   Local Machine port that will be used to access this project  
+> 
+>   __example__: 8000
+>   </dd>
+> 
+> 
+> </dl>
 
-  __example__: setting this value to __test__ will result in containers test.app, test.nginx...
-  </dd>
+### Database 
+> <dl>
+>   <dt>MYSQL_PORT</dt>
+>   <dd>
+>   Local Machine port that will be used to access project database
+> 
+>   __example__: 8036
+>   </dd>
+> 
+>   <dt>DB_DATABASE</dt>
+>   <dd>
+>   Create Database by this name.  
+> 
+>   __note__: this value will need to be used in the application .env or configuration
+>   </dd>
+> 
+>   <dt>DB_USERNAME</dt>
+>   <dd>
+>   Username for created database user  
+> 
+>   __note__: this value will need to be used in the application .env or configuration
+>   </dd>
+> 
+>   <dt>DB_PASSWORD</dt>
+>   <dd>
+>   Password for created database user
+> 
+>   __note__: this value will need to be used in the application .env or configuration
+>   </dd>
+> </dl>
 
-  <dt>HTTP_PORT</dt>
-  <dd>
-  Local Machine port that will be used to access this project  
+### Mail Service
+> <dl>
+>   <dt>MAILHOG_PORT</dt>
+>   <dd>
+>   Local Machine Port used to access Meilisearch web interface
+> 
+>   __example__: 8025
+>   </dd>
+> </dl>
 
-  __example__: 8000
-  </dd>
-
-  <dt>MYSQL_PORT</dt>
-  <dd>
-  Local Machine port that will be used to access project database
-
-  __example__: 8036
-  </dd>
-
-  <dt>DB_DATABASE</dt>
-  <dd>
-  Create Database by this name.  
-
-  __note__: this value will need to be used in the application .env or configuration
-  </dd>
-
-  <dt>DB_USERNAME</dt>
-  <dd>
-  Username for created database user  
-
-  __note__: this value will need to be used in the application .env or configuration
-  </dd>
-
-  <dt>DB_PASSWORD</dt>
-  <dd>
-  Password for created database user
-
-  __note__: this value will need to be used in the application .env or configuration
-  </dd>
-
-  <dt>MAILHOG_PORT</dt>
-  <dd>
-  Local Machine Port used to access Meilisearch web interface
-
-  __example__: 8025
-  </dd>
-
-  <dt>MEILISEARCH_PORT</dt>
-  <dd>
-  Local Machine Port used to access Meilisearch web interface
-
-  __example__: 8077
-  </dd>
-
-  <dt>MEILISEARCH_KEY</dt>
-  <dd>
-  Master Key used to create Meilisearch instance  
-
-  __default__: MeilisearchLocalDevelopment
-
-  __note__: this value will need to be used in the application .env or configuration
-  </dd>
-</dl>
+### Search Service
+> <dl>
+>   <dt>MEILISEARCH_PORT</dt>
+>   <dd>
+>   Local Machine Port used to access Meilisearch web interface
+> 
+>   __example__: 8077
+>   </dd>
+> 
+>   <dt>MEILISEARCH_KEY</dt>
+>   <dd>
+>   Master Key used to create Meilisearch instance  
+> 
+>   __default__: MeilisearchLocalDevelopment
+> 
+>   __note__: this value will need to be used in the application .env or configuration
+>   </dd>
+> </dl>
 
