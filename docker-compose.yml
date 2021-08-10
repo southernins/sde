@@ -31,6 +31,20 @@ services:
     networks:
       - app-net
 
+  test-data:
+    image: mysql:5.7
+    container_name: ${COMPOSE_PROJECT_NAME}_test.data
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_TEST_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - app-net
+
   nginx:
     build:
       context: ./containers/nginx
