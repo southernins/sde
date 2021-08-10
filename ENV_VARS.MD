@@ -76,13 +76,6 @@ __note__: Ports must be unique across all running projects. You cannot bind to t
 > 
 >   __note__: this value will need to be used in the application .env or configuration
 >   </dd>
->
->   <dt>DB_TEST_DATABASE</dt>
->   <dd>
->   Create Separate Database for testing by this name.  
->
->   __note__: this value will need to be used in the application test .env or configuration
->   </dd>
 > </dl>
 
 
