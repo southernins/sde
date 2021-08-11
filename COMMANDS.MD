@@ -13,7 +13,6 @@ information and examples of command usage for projects build on the Stock Dev En
     docker-compose run artisan list
     docker-compose run artisan test
     docker-compose run artisan omega:index
-    docker-compose run artisan build --env=production --path=./builds/
 
 
 **NPM**
@@ -29,6 +28,14 @@ information and examples of command usage for projects build on the Stock Dev En
     docker-compose run composer install
     docker-compose run composer install --no-dev
     docker-compose run composer upgrade
+
+
+**Build**  
+Custom container service to build deployment packages.  this is a wrapper for artisan build commands the correctly sets the application context.  allowing build files to be put in the current directory.
+
+
+    docker-compose run build --env=production
+    docker-compose run build --env=staging
 
 
 ### Execute commands inside a running container/image
@@ -68,7 +75,6 @@ containers will need to be built before starting, and rebuilt if changes are mad
 build and start as two separate commands
 
     docker-compose build
-
     docker-compose up -d
 
 
