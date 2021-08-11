@@ -105,3 +105,15 @@ services:
     entrypoint: [ 'composer' ]
     networks:
       - app-net
+
+  build:
+    image: ${COMPOSE_PROJECT_NAME}_app
+    container_name: ${COMPOSE_PROJECT_NAME}.build
+    volumes:
+      - ./:/var/www:delegated
+    depends_on:
+      - app
+    working_dir: /var/www/${COMPOSE_PROJECT_NAME}
+    entrypoint: [ 'php', '/var/www/${COMPOSE_PROJECT_NAME}/artisan', 'build' ]
+    networks:
+      - app-net
