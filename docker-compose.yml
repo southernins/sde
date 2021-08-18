@@ -21,6 +21,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./containers/app-data/init:/docker-entrypoint-initdb.d
+      - mysql-data:/var/lib/mysql
     ports:
       - ${MYSQL_PORT}:3306
     environment:
@@ -49,6 +50,9 @@ services:
     image: redis:alpine
     container_name: ${COMPOSE_PROJECT_NAME}.redis
     restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    command: ["redis-server", "--appendonly", "yes"]
     networks:
       - app-net
 
@@ -117,3 +121,6 @@ services:
     entrypoint: [ 'php', '/var/www/${COMPOSE_PROJECT_NAME}/artisan', 'build' ]
     networks:
       - app-net
+volumes:
+    mysql-data:
+    redis-data:
