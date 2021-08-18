@@ -29,6 +29,7 @@ RUN apt-get install -y --no-install-recommends gnupg && \
     apt-get install -y --no-install-recommends nodejs
 
 RUN apt-get install -y wkhtmltopdf
+RUN ln -s /usr/bin/wkhtmltopdf  /usr/local/bin/wkhtmltopdf
 
 #WORKDIR /usr/local/wkhtmltox
 #
