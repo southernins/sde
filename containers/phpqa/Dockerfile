@@ -21,12 +21,16 @@ RUN apt-get update && \
 
 RUN ln -s /usr/bin/wkhtmltopdf  /usr/local/bin/wkhtmltopdf
 
-
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql gd zip mbstring exif pcntl bcmath gd zip
 
-# mbstring exif pcntl bcmath gd zip
+RUN yes | pecl install xdebug && \
+    echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini && \
+    echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+    echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+    echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/xdebug.ini
 
+## RUN docker-php-ext-enable xdebug
 
 
 # Clear cache
