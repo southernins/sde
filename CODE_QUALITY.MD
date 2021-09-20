@@ -23,3 +23,8 @@ to spin up a local Sonarqube server for testing run the following
 
 
 docker run --init -it --rm -v "$(pwd):/project" -w /project jakzal/phpqa:php7.4
+
+
+
+
+TODO:: look into https://github.com/sds/overcommit
