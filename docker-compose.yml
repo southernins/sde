@@ -64,13 +64,14 @@ services:
     networks:
       - app-net
 
-  milisearch:
+  meilisearch:
     image: getmeili/meilisearch
     container_name: ${COMPOSE_PROJECT_NAME}.search
     ports:
       - ${MEILISEARCH_PORT}:7700
     environment:
       MEILI_MASTER_KEY: ${MEILISEARCH_KEY}
+      MEILI_NO_ANALYTICS: 1
     networks:
       - app-net
 
