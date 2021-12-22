@@ -28,11 +28,22 @@ __note__: Ports must be unique across all running projects. You cannot bind to t
 > 
 >   <dt>COMPOSE_PROJECT_NAME</dt>
 >   <dd>
->   Provides scope for containers and services created. Use project folder name   
+>   Provides scope for containers and services created. Must be unique per project, all lower case, cannot contain "." 
 > 
->   __example__: setting this value to __test__ will result in containers `test.app`, `test.nginx` and point the document root to `./test` for this project ...
+>   __example__: setting this value to __test__ will result in containers `test.app`, `test.nginx` 
 >   </dd>
 > </dl>
+
+> <dl>
+>
+>   <dt>PROJECT_DIR</dt>
+>   <dd>
+>   The name of the folder containing  the repository/code for this project.  For a repo cloned via Git this will generally be the name of the repo.
+>
+>   __example__: setting this value to __test__ will point the container's working folder to `./test` for this project ...
+>   </dd>
+> </dl>
+
 
 ### Application 
 > <dl>
