@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ./${COMPOSE_PROJECT_NAME}:/var/www
+      - ./${PROJECT_DIR}:/var/www
     networks:
       - app-net
 
@@ -42,7 +42,7 @@ services:
     ports:
       - ${HTTP_PORT}:80
     volumes:
-      - ./${COMPOSE_PROJECT_NAME}:/var/www
+      - ./${PROJECT_DIR}:/var/www
     networks:
       - app-net
 
@@ -79,7 +79,7 @@ services:
     image: ${COMPOSE_PROJECT_NAME}_app
     container_name: ${COMPOSE_PROJECT_NAME}.artisan
     volumes:
-      - ./${COMPOSE_PROJECT_NAME}:/var/www:delegated
+      - ./${PROJECT_DIR}:/var/www:delegated
     depends_on:
       - app
     working_dir: /var/www
@@ -91,7 +91,7 @@ services:
     image: ${COMPOSE_PROJECT_NAME}_app
     container_name: ${COMPOSE_PROJECT_NAME}.npm
     volumes:
-      - ./${COMPOSE_PROJECT_NAME}:/var/www:delegated
+      - ./${PROJECT_DIR}:/var/www:delegated
     depends_on:
       - app
     working_dir: /var/www
@@ -103,7 +103,7 @@ services:
     image: ${COMPOSE_PROJECT_NAME}_app
     container_name: ${COMPOSE_PROJECT_NAME}.composer
     volumes:
-      - ./${COMPOSE_PROJECT_NAME}:/var/www:delegated
+      - ./${PROJECT_DIR}:/var/www:delegated
     depends_on:
       - app
     working_dir: /var/www
@@ -118,8 +118,8 @@ services:
       - ./:/var/www:delegated
     depends_on:
       - app
-    working_dir: /var/www/${COMPOSE_PROJECT_NAME}
-    entrypoint: [ 'php', '/var/www/${COMPOSE_PROJECT_NAME}/artisan', 'build' ]
+    working_dir: /var/www/${PROJECT_DIR}
+    entrypoint: [ 'php', '/var/www/${PROJECT_DIR}/artisan', 'build' ]
     networks:
       - app-net
 volumes:
