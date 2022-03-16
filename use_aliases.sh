@@ -22,3 +22,12 @@ if [ -r ~/.zshrc ]; then
   # source the alias file for the current session
   . ~/.zsh_aliases
 fi
+
+echo
+echo
+echo ================================================================================
+echo NOTICE!!!!
+echo Added/updated aliases will not be available until you start a new shell session.
+echo ================================================================================
+echo
+echo
