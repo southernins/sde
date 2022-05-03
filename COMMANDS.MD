@@ -71,10 +71,13 @@ these examples assume the Docker-Compose ENV variable `COMPOSE_PROJECT_NAME=test
     docker exec -it test.app php artisan build --env=production
 
 
-**Running tests**
+**Running tests via Artisan**
 
     docker exec -it test.app php artisan test
 
+**Running tests via phpunit**
+
+    docker exec -it test.app ./vendor/bin/phpunit ./tests/
 
 ### Docker Startup
 containers will need to be built before starting, and rebuilt if changes are made to container files.
