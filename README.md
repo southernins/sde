@@ -11,6 +11,7 @@
 ### 1: Get local copy of sde
 
     git clone https://github.com/southernins/sde.git ./ 
+    git clone https://github.com/southernins/sde.git ./ 
 
 Once cloned you are free to comment out any services in the docker-compose.yml file.
 

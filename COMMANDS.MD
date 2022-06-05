@@ -1,48 +1,55 @@
-## Command Reference
 information and examples of command usage for projects build on the Stock Dev Environment.
 
+## Command Reference
 
 ## Docker Commands
 
 ### Using Service Containers provided by SDE
+The commands provided in the section use service containers provided by SDE and must be run inside the root project folder. (same directory as the file docker-compose.yml)
 
-    docker-compose run <service_name> <command>
+Here is the command structure.
+
+    docker-compose run --rm <service_name> <command>
+
+**--rm** - adding this tells docker to automatically clean up the resulting container once the command/service has run.  Leave this off if you need to review the results or logs of the container.
 
 **Artisan**
 
-    docker-compose run artisan list
-    docker-compose run artisan test
-    docker-compose run artisan omega:index
+    docker-compose run --rm artisan list
+    docker-compose run --rm artisan test
+    docker-compose run --rm artisan omega:index
 
 
 **NPM**
 
-    docker-compose run npm run dev
-    docker-compose run npm run production
-    docker-compose run npm install
-    docker-compose run npm upgrade
+    docker-compose run --rm npm run dev
+    docker-compose run --rm npm run production
+    docker-compose run --rm npm install
+    docker-compose run --rm npm upgrade
 
 
 **Composer**
 
-    docker-compose run composer install
-    docker-compose run composer install --no-dev
-    docker-compose run composer upgrade
+    docker-compose run --rm composer install
+    docker-compose run --rm composer install --no-dev
+    docker-compose run --rm composer upgrade
 
 
 **Build**  
 Custom container service to build deployment packages.  this is a wrapper for artisan build commands the correctly sets the application context.  allowing build files to be put in the current directory.
 
 
-    docker-compose run build --env=production
-    docker-compose run build --env=staging
+    docker-compose run --rm build --env=production
+    docker-compose run --rm build --env=staging
 
 
 ### Execute commands inside a running container/image
 
+This is docker's way of executing commands inside a given container and can be run in the directory relavent to the piticular command
+
     docker exec -it <image_name> <command>
 
-these examples assume the ENV variable `COMPOSE_PROJECT_NAME=test`
+these examples assume the Docker-Compose ENV variable `COMPOSE_PROJECT_NAME=test`
 
 **Run bash**
 
@@ -64,10 +71,13 @@ these examples assume the ENV variable `COMPOSE_PROJECT_NAME=test`
     docker exec -it test.app php artisan build --env=production
 
 
-**Running tests**
+**Running tests via Artisan**
 
     docker exec -it test.app php artisan test
 
+**Running tests via phpunit**
+
+    docker exec -it test.app ./vendor/bin/phpunit ./tests/
 
 ### Docker Startup
 containers will need to be built before starting, and rebuilt if changes are made to container files.
