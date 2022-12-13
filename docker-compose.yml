@@ -123,6 +123,13 @@ services:
     entrypoint: [ 'php', '/var/www/${PROJECT_DIR}/artisan', 'build' ]
     networks:
       - app-net
+
+  selenium:
+    image: selenium/standalone-chrome
+    container_name: ${COMPOSE_PROJECT_NAME}.selenium
+    ports:
+      - "4444:4444"
+
 volumes:
     mysql-data:
     redis-data:
