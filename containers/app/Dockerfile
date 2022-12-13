@@ -1,6 +1,6 @@
 #FROM node:14 AS node
 FROM composer:2 AS composer
-FROM php:7.4-fpm
+FROM php:8.1-fpm
 
 # Arguments defined in docker-compose.yml
 ARG user=southerndev
