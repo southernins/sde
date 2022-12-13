@@ -78,7 +78,7 @@ services:
       - app-net
 
   artisan:
-    image: ${COMPOSE_PROJECT_NAME}_app
+    image: ${COMPOSE_PROJECT_NAME}-app
     container_name: ${COMPOSE_PROJECT_NAME}.artisan
     volumes:
       - ./${PROJECT_DIR}:/var/www:delegated
@@ -90,7 +90,7 @@ services:
       - app-net
 
   npm:
-    image: ${COMPOSE_PROJECT_NAME}_app
+    image: ${COMPOSE_PROJECT_NAME}-app
     container_name: ${COMPOSE_PROJECT_NAME}.npm
     volumes:
       - ./${PROJECT_DIR}:/var/www:delegated
@@ -102,7 +102,7 @@ services:
       - app-net
 
   composer:
-    image: ${COMPOSE_PROJECT_NAME}_app
+    image: ${COMPOSE_PROJECT_NAME}-app
     container_name: ${COMPOSE_PROJECT_NAME}.composer
     volumes:
       - ./${PROJECT_DIR}:/var/www:delegated
@@ -114,7 +114,7 @@ services:
       - app-net
 
   build:
-    image: ${COMPOSE_PROJECT_NAME}_app
+    image: ${COMPOSE_PROJECT_NAME}-app
     container_name: ${COMPOSE_PROJECT_NAME}.build
     volumes:
       - ./:/var/www:delegated
