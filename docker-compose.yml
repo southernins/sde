@@ -59,6 +59,7 @@ services:
   mailhog:
     image: mailhog/mailhog:latest
     container_name: ${COMPOSE_PROJECT_NAME}.mail
+    restart: unless-stopped
     ports:
       - ${MAILHOG_PORT}:8025
     networks:
