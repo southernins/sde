@@ -130,6 +130,8 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}.selenium
     ports:
       - "4444:4444"
+    networks:
+      - app-net
 
 volumes:
     mysql-data:
