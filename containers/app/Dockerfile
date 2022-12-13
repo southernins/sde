@@ -25,7 +25,7 @@ RUN apt-get update && \
 
 # Install Node/Npm
 RUN apt-get install -y --no-install-recommends gnupg && \
-    curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
+    curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get update && \
     apt-get install -y --no-install-recommends nodejs
 
