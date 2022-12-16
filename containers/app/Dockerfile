@@ -10,6 +10,7 @@ ARG uid=1000
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 COPY ./php/custom.ini /usr/local/etc/php/conf.d/custom.ini
+COPY ./php-fpm/custom.conf /usr/local/etc/php-fpm.d/custom.conf
 
 # Install system dependencies
 RUN apt-get update && \
