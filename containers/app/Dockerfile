@@ -12,6 +12,8 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY ./php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 COPY ./php-fpm/custom.conf /usr/local/etc/php-fpm.d/custom.conf
 
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+
 # Install system dependencies
 RUN apt-get update && \
     apt-get install -y \
