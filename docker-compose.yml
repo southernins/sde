@@ -16,7 +16,7 @@ services:
       - app-net
 
   app-data:
-    image: mysql:5.7
+    image: mysql:8.0
     container_name: ${COMPOSE_PROJECT_NAME}.data
     restart: unless-stopped
     volumes:
