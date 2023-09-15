@@ -28,7 +28,7 @@ RUN apt-get update && \
 
 # Install Node/Npm
 RUN apt-get install -y --no-install-recommends gnupg && \
-    curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
+    curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get update && \
     apt-get install -y --no-install-recommends nodejs
 
@@ -54,7 +54,6 @@ RUN yes | pecl install xdebug && \
 # Clear cache
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
 
 
 ## Create system user to run Composer and Artisan Commands
