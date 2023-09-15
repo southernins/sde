@@ -1,11 +1,11 @@
 #FROM node:14 AS node
-NODE_VERSION=16;
 FROM composer:2 AS composer
 FROM php:8.1-fpm
 
 # Arguments defined in docker-compose.yml
 ARG user=southerndev
 ARG uid=1000
+ARG NODE_VERSION=16
 
 # Install Composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
