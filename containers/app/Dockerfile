@@ -1,4 +1,5 @@
 #FROM node:14 AS node
+NODE_VERSION=16;
 FROM composer:2 AS composer
 FROM php:8.1-fpm
 
@@ -27,10 +28,21 @@ RUN apt-get update && \
     unzip
 
 # Install Node/Npm
-RUN apt-get install -y --no-install-recommends gnupg && \
-    curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
+# Depricated Way
+#RUN apt-get install -y --no-install-recommends gnupg && \
+#    curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
+#    apt-get update && \
+#    apt-get install -y --no-install-recommends nodejs
+
+# Install Node/NPM
+# New Way
+# apt-get update already ran
+RUN apt-get install -y ca-certificates curl gnupg && \
+    mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list && \
     apt-get update && \
-    apt-get install -y --no-install-recommends nodejs
+    apt-get install nodejs -y
 
 RUN apt-get install -y wkhtmltopdf
 RUN ln -s /usr/bin/wkhtmltopdf  /usr/local/bin/wkhtmltopdf
