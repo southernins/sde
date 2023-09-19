@@ -15,8 +15,8 @@ COPY ./php-fpm/custom.conf /usr/local/etc/php-fpm.d/custom.conf
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 # Install system dependencies
-RUN apt-get update && \
-    apt-get install -y \
+RUN apt-get update \
+    && apt-get install -y \
     git \
     curl \
     libpng-dev \
@@ -35,9 +35,9 @@ RUN ln -s /usr/bin/wkhtmltopdf  /usr/local/bin/wkhtmltopdf
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
-RUN yes | pecl install xdebug && \
-    echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini && \
-    echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini
+RUN yes | pecl install xdebug \
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 
 # nvm install node will install the latest version of node
@@ -57,13 +57,13 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 
 # Clear cache
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 ## Create system user to run Composer and Artisan Commands
 RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
+RUN mkdir -p /home/$user/.composer \
+    && chown -R $user:$user /home/$user
 
 
 # Set working directory
