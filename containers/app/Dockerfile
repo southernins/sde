@@ -5,7 +5,6 @@ FROM php:8.1-fpm
 # Arguments defined in docker-compose.yml
 ARG user=southerndev
 ARG uid=1000
-ARG NODE_VERSION=16
 
 # Install Composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
@@ -27,33 +26,10 @@ RUN apt-get update && \
     zip \
     unzip
 
-# Install Node/Npm
-# Depricated Way
-#RUN apt-get install -y --no-install-recommends gnupg && \
-#    curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
-#    apt-get update && \
-#    apt-get install -y --no-install-recommends nodejs
 
-# Install Node/NPM
-# New Way
-# apt-get update already ran
-RUN apt-get install -y ca-certificates curl gnupg && \
-    mkdir -p /etc/apt/keyrings && \
-    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
-    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list && \
-    apt-get update && \
-    apt-get install nodejs -y
-
+# Install WKHTMLTOPDF pdf converter
 RUN apt-get install -y wkhtmltopdf
 RUN ln -s /usr/bin/wkhtmltopdf  /usr/local/bin/wkhtmltopdf
-
-#WORKDIR /usr/local/wkhtmltox
-#
-#RUN curl -LO https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
-#
-#RUN tar -Jxvf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
-#
-#RUN ln -s /usr/local/wkhtmltox/wkhtmltox/bin/wkhtmltopdf  /usr/local/bin/wkhtmltopdf
 
 
 # Install PHP extensions
@@ -63,18 +39,41 @@ RUN yes | pecl install xdebug && \
     echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini && \
     echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini
 
+
+# nvm install node will install the latest version of node
+ARG NODE_VERSION='20.6.1'
+ARG NVM_DIR="/usr/local/nvm"
+ARG NVM_VERSION='0.39.5'
+
+# Install Node/NPM, using NVM
+RUN mkdir -p $NVM_DIR
+RUN curl https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm use $NODE_VERSION
+
+ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+
 # Clear cache
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
 
 ## Create system user to run Composer and Artisan Commands
 RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
+
 # Set working directory
 WORKDIR /var/www
 
 USER $user
 #USER 1000
+
+# Pre-flight tests for container
+RUN node -v
+RUN npm -v
+RUN composer -v
+RUN php -v
