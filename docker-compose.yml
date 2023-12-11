@@ -134,6 +134,19 @@ services:
     networks:
       - app-net
 
+  cypress:
+    image: "cypress/included:12.9.0"
+    container_name: ${COMPOSE_PROJECT_NAME}.cypress
+    depends_on:
+      - nginx
+    environment:
+      - CYPRESS_baseUrl=http://${COMPOSE_PROJECT_NAME}.nginx
+    working_dir: /e2e
+    volumes:
+      - ./${PROJECT_DIR}:/e2e
+    networks:
+      - app-net
+
 volumes:
     mysql-data:
     redis-data:
