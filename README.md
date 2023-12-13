@@ -48,17 +48,37 @@ information on commands and how to run them in a docker envrionment can be found
 
 
 ## Updating SDE
-to update your local install/clone of SDE to get any changes pushed out.
+
+to update your local install/clone of SDE.
 
     git pull
 
+if there are local changes to your SDE code you will get an error about uncommited changes. you will need to revert to main before you can pull update/changes  
+     
+    git reset --hard main
+
 To pull a specific version you can use
-    
+
     git reset --hard <tag_name>
     git reset --hard v1
 
-
-Following an update to SDE you need to rebuild containers.  This command has been the most complete.  It will ensure containers are recreated
+Once SDE is updated you need to rebuild containers.  This command has been the most complete.  It will ensure containers are recreated
 
     docker-compose up -d --build --remove-orphans --force-recreate
 
+
+You can break the above out into multiple commands if needed.
+
+    docker-compose build
+
+    docker-compose up -d
+
+or if there are orphaned containers that need to be removed
+
+    docker-compose up -d  --remove-orphans
+
+
+* Dont forget to update your composer dependencies 
+
+
+    docker-compose run --rm --no-deps composer update
