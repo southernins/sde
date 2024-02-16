@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ./${PROJECT_DIR}:/var/www
+      - ./${APP_DIR}:/var/www
     networks:
       - app-net
 
@@ -46,6 +46,20 @@ services:
     networks:
       - app-net
 
+  client:
+    image: node:18-alpine
+    container_name: ${COMPOSE_PROJECT_NAME}.client
+    restart: unless-stopped
+    volumes:
+      - ./${CLIENT_DIR}:/usr/src/app/${CLIENT_DIR}
+    working_dir: /usr/src/app/${CLIENT_DIR}
+    ports:
+      - "0.0.0.0:80:3000"
+    environment:
+      HOST: 0.0.0.0
+    networks:
+      - app-net
+
   redis:
     image: redis:alpine
     container_name: ${COMPOSE_PROJECT_NAME}.redis
@@ -66,7 +80,7 @@ services:
       - app-net
 
   meilisearch:
-    image: getmeili/meilisearch:v0.19.0
+    image: getmeili/meilisearch:v1.6
     container_name: ${COMPOSE_PROJECT_NAME}.search
     restart: unless-stopped
     ports:
@@ -77,75 +91,75 @@ services:
     networks:
       - app-net
 
-  artisan:
-    image: ${COMPOSE_PROJECT_NAME}-app
-    container_name: ${COMPOSE_PROJECT_NAME}.artisan
-    volumes:
-      - ./${PROJECT_DIR}:/var/www:delegated
-    depends_on:
-      - app
-    working_dir: /var/www
-    entrypoint: [ 'php', '/var/www/artisan' ]
-    networks:
-      - app-net
-
-  npm:
-    image: ${COMPOSE_PROJECT_NAME}-app
-    container_name: ${COMPOSE_PROJECT_NAME}.npm
-    volumes:
-      - ./${PROJECT_DIR}:/var/www:delegated
-    depends_on:
-      - app
-    working_dir: /var/www
-    entrypoint: [ 'npm' ]
-    networks:
-      - app-net
-
-  composer:
-    image: ${COMPOSE_PROJECT_NAME}-app
-    container_name: ${COMPOSE_PROJECT_NAME}.composer
-    volumes:
-      - ./${PROJECT_DIR}:/var/www:delegated
-    depends_on:
-      - app
-    working_dir: /var/www
-    entrypoint: [ 'composer' ]
-    networks:
-      - app-net
-
-  build:
-    image: ${COMPOSE_PROJECT_NAME}-app
-    container_name: ${COMPOSE_PROJECT_NAME}.build
-    volumes:
-      - ./:/var/www:delegated
-    depends_on:
-      - app
-    working_dir: /var/www/${PROJECT_DIR}
-    entrypoint: [ 'php', '/var/www/${PROJECT_DIR}/artisan', 'build' ]
-    networks:
-      - app-net
-
-  selenium:
-    image: selenium/standalone-chrome
-    container_name: ${COMPOSE_PROJECT_NAME}.selenium
-    restart: unless-stopped
-    ports:
-      - "4444:4444"
-    networks:
-      - app-net
-
-  cypress:
-    image: "cypress/included:12.9.0"
-    container_name: ${COMPOSE_PROJECT_NAME}.cypress
-    depends_on:
-      - nginx
-    environment:
-      - CYPRESS_baseUrl=http://${COMPOSE_PROJECT_NAME}.nginx
-    working_dir: /e2e
-    volumes:
-      - ./${PROJECT_DIR}:/e2e
-    networks:
-      - app-net
+#  artisan:
+#    image: ${COMPOSE_PROJECT_NAME}-app
+#    container_name: ${COMPOSE_PROJECT_NAME}.artisan
+#    volumes:
+#      - ./${PROJECT_DIR}:/var/www:delegated
+#    depends_on:
+#      - app
+#    working_dir: /var/www
+#    entrypoint: [ 'php', '/var/www/artisan' ]
+#    networks:
+#      - app-net
+#
+#  npm:
+#    image: ${COMPOSE_PROJECT_NAME}-app
+#    container_name: ${COMPOSE_PROJECT_NAME}.npm
+#    volumes:
+#      - ./${PROJECT_DIR}:/var/www:delegated
+#    depends_on:
+#      - app
+#    working_dir: /var/www
+#    entrypoint: [ 'npm' ]
+#    networks:
+#      - app-net
+#
+#  composer:
+#    image: ${COMPOSE_PROJECT_NAME}-app
+#    container_name: ${COMPOSE_PROJECT_NAME}.composer
+#    volumes:
+#      - ./${PROJECT_DIR}:/var/www:delegated
+#    depends_on:
+#      - app
+#    working_dir: /var/www
+#    entrypoint: [ 'composer' ]
+#    networks:
+#      - app-net
+#
+#  build:
+#    image: ${COMPOSE_PROJECT_NAME}-app
+#    container_name: ${COMPOSE_PROJECT_NAME}.build
+#    volumes:
+#      - ./:/var/www:delegated
+#    depends_on:
+#      - app
+#    working_dir: /var/www/${PROJECT_DIR}
+#    entrypoint: [ 'php', '/var/www/${PROJECT_DIR}/artisan', 'build' ]
+#    networks:
+#      - app-net
+#
+#  selenium:
+#    image: selenium/standalone-chrome
+#    container_name: ${COMPOSE_PROJECT_NAME}.selenium
+#    restart: unless-stopped
+#    ports:
+#      - "4444:4444"
+#    networks:
+#      - app-net
+#
+#  cypress:
+#    image: "cypress/included:12.9.0"
+#    container_name: ${COMPOSE_PROJECT_NAME}.cypress
+#    depends_on:
+#      - nginx
+#    environment:
+#      - CYPRESS_baseUrl=http://${COMPOSE_PROJECT_NAME}.nginx
+#    working_dir: /e2e
+#    volumes:
+#      - ./${PROJECT_DIR}:/e2e
+#    networks:
+#      - app-net
 
 volumes:
     mysql-data:
