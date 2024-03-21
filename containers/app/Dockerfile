@@ -39,8 +39,16 @@ RUN yes | pecl install xdebug \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini
 
+ARG PHP_INFECTION_VERSION='0.27.0'
 
-# nvm install node will install the latest version of node
+RUN wget https://github.com/infection/infection/releases/download/0.27.0/infection.phar && \
+    wget https://github.com/infection/infection/releases/download/0.27.0/infection.phar.asc && \
+    chmod +x infection.phar && \
+    gpg --recv-keys C6D76C329EBADE2FB9C458CFC5095986493B4AA0 && \
+    gpg --with-fingerprint --verify infection.phar.asc infection.phar && \
+    mv infection.phar /usr/local/bin/infection
+
+# nvm install node will install the following version of node
 ARG NODE_VERSION='20.6.1'
 ARG NVM_DIR="/usr/local/nvm"
 ARG NVM_VERSION='0.39.5'
