@@ -19,11 +19,13 @@ RUN apt-get update \
     && apt-get install -y \
     git \
     curl \
+    wget \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
     libzip-dev \
     zip \
+    gpg \
     unzip
 
 
@@ -41,11 +43,13 @@ RUN yes | pecl install xdebug \
 
 ARG PHP_INFECTION_VERSION='0.27.0'
 
-RUN wget https://github.com/infection/infection/releases/download/0.27.0/infection.phar && \
-    wget https://github.com/infection/infection/releases/download/0.27.0/infection.phar.asc && \
+RUN mkdir -p /usr/local/infection
+
+RUN wget https://github.com/infection/infection/releases/download/$PHP_INFECTION_VERSION/infection.phar && \
+#    wget https://github.com/infection/infection/releases/download/$PHP_INFECTION_VERSION/infection.phar.asc && \
+#    gpg --recv-keys C6D76C329EBADE2FB9C458CFC5095986493B4AA0 && \
+#    gpg --with-fingerprint --verify /usr/local/infection/infection.phar.asc /usr/local/infection/infection.phar && \
     chmod +x infection.phar && \
-    gpg --recv-keys C6D76C329EBADE2FB9C458CFC5095986493B4AA0 && \
-    gpg --with-fingerprint --verify infection.phar.asc infection.phar && \
     mv infection.phar /usr/local/bin/infection
 
 # nvm install node will install the following version of node

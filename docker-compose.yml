@@ -147,17 +147,17 @@ services:
     networks:
       - app-net
 
-#  infection:
-#    image: ${COMPOSE_PROJECT_NAME}-app
-#    container_name: ${COMPOSE_PROJECT_NAME}.infection
-#    volumes:
-#      - ./${PROJECT_DIR}:/var/www:delegated
-#    depends_on:
-#      - app
-#    working_dir: /var/www
-#    entrypoint: [ 'infection' ]
-#    networks:
-#      - app-net
+  infection:
+    image: ${COMPOSE_PROJECT_NAME}-app
+    container_name: ${COMPOSE_PROJECT_NAME}.infection
+    volumes:
+      - ./${PROJECT_DIR}:/var/www:delegated
+    depends_on:
+      - app
+    working_dir: /var/www
+    entrypoint: [ 'infection' ]
+    networks:
+      - app-net
 
 volumes:
     mysql-data:
