@@ -17,14 +17,14 @@ COPY ./php-fpm/custom.conf /usr/local/etc/php-fpm.d/custom.conf
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 # Include ZScaler ca file
-#COPY ./zscaler-root-ca.crt /usr/local/share/ca-certificates/zscaler-root-ca.crt
-#RUN update-ca-certificates
+COPY ./zscaler-root-ca.crt /usr/local/share/ca-certificates/zscaler-root-ca.crt
+RUN update-ca-certificates
 
 
 # Add ZScaler CA file to Env vars so NPM will pick it up properly
-#ENV NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/zscaler-root-ca.crt
-#ENV REQUESTS_CA_BUNDLE=/usr/local/share/ca-certificates/zscaler-root-ca.crt
-#ENV SSL_CERT_FILE=/usr/local/share/ca-certificates/zscaler-root-ca.crt
+ENV NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/zscaler-root-ca.crt
+ENV REQUESTS_CA_BUNDLE=/usr/local/share/ca-certificates/zscaler-root-ca.crt
+ENV SSL_CERT_FILE=/usr/local/share/ca-certificates/zscaler-root-ca.crt
 
 # Install system dependencies
 RUN apt-get update \
@@ -42,8 +42,14 @@ RUN apt-get update \
 
 
 # Install WKHTMLTOPDF pdf converter
-RUN apt-get install -y wkhtmltopdf
-RUN ln -s /usr/bin/wkhtmltopdf  /usr/local/bin/wkhtmltopdf
+RUN if [ "$wkhtmltopdf" = "true" ]; then \
+#      apt-get install -y yum -y install fontconfig libXrender libXext xorg-x11-fonts-Type1 xorg-x11-fonts-75dpi freetype libpng zlib libjpeg-turbo openssl icu
+      apt-get install -y fontconfig libjpeg62-turbo libxrender1 xfonts-base xfonts-75dpi && \
+      wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb && \
+      dpkg -i wkhtmltox_0.12.6.1-3.bookworm_amd64.deb; \
+#      apt-get install -y wkhtmltopdf && \
+#      ln -s /usr/bin/wkhtmltopdf  /usr/local/bin/wkhtmltopdf; \
+    fi
 
 
 # Install PHP extensions
@@ -55,14 +61,18 @@ RUN yes | pecl install xdebug \
 
 ARG PHP_INFECTION_VERSION='0.27.0'
 
-RUN mkdir -p /usr/local/infection
 
-RUN wget https://github.com/infection/infection/releases/download/$PHP_INFECTION_VERSION/infection.phar && \
+RUN if [ "$infection" = 'true' ]; then \
+        mkdir -p /usr/local/infection && \
+#
 #    wget https://github.com/infection/infection/releases/download/$PHP_INFECTION_VERSION/infection.phar.asc && \
 #    gpg --recv-keys C6D76C329EBADE2FB9C458CFC5095986493B4AA0 && \
 #    gpg --with-fingerprint --verify /usr/local/infection/infection.phar.asc /usr/local/infection/infection.phar && \
-    chmod +x infection.phar && \
-    mv infection.phar /usr/local/bin/infection
+#
+        wget https://github.com/infection/infection/releases/download/$PHP_INFECTION_VERSION/infection.phar && \
+        chmod +x infection.phar && \
+        mv infection.phar /usr/local/bin/infection; \
+    fi
 
 # nvm install node will install the following version of node
 ARG NODE_VERSION='20.6.1'
