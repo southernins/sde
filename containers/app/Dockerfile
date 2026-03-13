@@ -5,6 +5,8 @@ FROM php:8.3-fpm
 # Arguments defined in docker-compose.yml
 ARG user=southerndev
 ARG uid=1000
+ARG wkhtmltopdf=false
+ARG infection=false
 
 # Install Composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
@@ -15,13 +17,14 @@ COPY ./php-fpm/custom.conf /usr/local/etc/php-fpm.d/custom.conf
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 # Include ZScaler ca file
-COPY ./zscaler-root-ca.crt /usr/local/share/ca-certificates/zscaler-root-ca.crt
-RUN update-ca-certificates
+#COPY ./zscaler-root-ca.crt /usr/local/share/ca-certificates/zscaler-root-ca.crt
+#RUN update-ca-certificates
+
 
 # Add ZScaler CA file to Env vars so NPM will pick it up properly
-ENV NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/zscaler-root-ca.crt
-ENV REQUESTS_CA_BUNDLE=/usr/local/share/ca-certificates/zscaler-root-ca.crt
-ENV SSL_CERT_FILE=/usr/local/share/ca-certificates/zscaler-root-ca.crt
+#ENV NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/zscaler-root-ca.crt
+#ENV REQUESTS_CA_BUNDLE=/usr/local/share/ca-certificates/zscaler-root-ca.crt
+#ENV SSL_CERT_FILE=/usr/local/share/ca-certificates/zscaler-root-ca.crt
 
 # Install system dependencies
 RUN apt-get update \
