@@ -8,8 +8,8 @@ services:
     build:
       context: ./containers/app
       args:
-        wkhtmltopdf: true
-        infection: true
+        wkhtmltopdf: ${INSTALL_WKHTMLTOPDF}
+        infection: ${INSTALL_INFECTION}
     container_name: ${COMPOSE_PROJECT_NAME}.app
     restart: unless-stopped
     working_dir: /var/www/
