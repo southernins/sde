@@ -1,4 +1,4 @@
 .idea
 .env
 *.zip
-zscaler-root-ca.crt
+containers/app/zscaler-root-ca.crt
