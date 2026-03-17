@@ -37,6 +37,19 @@ services:
     networks:
       - app-net
 
+  dataflow:
+    image: postgres:16
+    container_name: ${COMPOSE_PROJECT_NAME}.dataflow
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    networks:
+      - app-net
+
   nginx:
     build:
       context: ./containers/nginx
