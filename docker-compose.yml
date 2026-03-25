@@ -34,6 +34,8 @@ services:
       MYSQL_USER: ${DB_USERNAME}
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    command: >
+      --local-infile=1
     networks:
       - app-net
 
